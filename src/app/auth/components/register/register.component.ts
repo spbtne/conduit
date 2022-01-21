@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { AppStateInterface } from 'src/app/shared/types/appState.interface';
-import { AuthService } from '../../service/auth.service';
+import { BackendErrorsInterface } from 'src/app/shared/types/backendErrors.interface';
 
 import { registerAction } from '../../store/actions/register.action';
 import { AuthStateInterface } from '../types/authState.interface';
@@ -16,12 +16,12 @@ import { RegisterRequestInterface } from '../types/registerRequest.interface';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
-  authState$!: Observable<AuthStateInterface>;
+  isSubmitting!: boolean;
+  backendErrors!: BackendErrorsInterface | null;
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<AppStateInterface>,
-    private authService: AuthService
+    private store: Store<AppStateInterface>
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +38,12 @@ export class RegisterComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.authState$ = this.store.pipe(select('auth'));
+    this.store
+      .pipe(select('auth'))
+      .subscribe((authState: AuthStateInterface): void => {
+        this.isSubmitting = authState.isSubmitting;
+        this.backendErrors = authState.validationErrors;
+      });
   }
 
   onSubmit(): void {

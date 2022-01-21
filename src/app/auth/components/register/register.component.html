@@ -6,7 +6,11 @@
         <p class="text-xs-center">
           <a [routerLink]="['/login']">Have an account?</a>
         </p>
-        backend errors are here
+        <app-backend-error-messages
+          *ngIf="backendErrors"
+          [backendErrors]="backendErrors"
+        >
+        </app-backend-error-messages>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <fieldset>
             <fieldset class="form-group">
@@ -36,7 +40,7 @@
             <button
               class="btn btn-lg btn-primary pull-xs-right"
               type="submit"
-              [disabled]="(authState$ | async)?.isSubmitting"
+              [disabled]="isSubmitting"
             >
               Sign up
             </button>
