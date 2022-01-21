@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppStateInterface } from 'src/app/shared/types/appState.interface';
+import { AuthService } from '../../service/auth.service';
 
 import { registerAction } from '../../store/actions/register.action';
+import { AuthStateInterface } from '../types/authState.interface';
+import { RegisterRequestInterface } from '../types/registerRequest.interface';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +16,17 @@ import { registerAction } from '../../store/actions/register.action';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
+  authState$!: Observable<AuthStateInterface>;
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppStateInterface>,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
+    this.initializeValues();
   }
 
   initializeForm(): void {
@@ -26,7 +37,14 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  initializeValues(): void {
+    this.authState$ = this.store.pipe(select('auth'));
+  }
+
   onSubmit(): void {
-    this.store.dispatch(registerAction(this.form.value));
+    const request: RegisterRequestInterface = {
+      user: { ...this.form.value },
+    };
+    this.store.dispatch(registerAction({ request }));
   }
 }
