@@ -6,10 +6,12 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthResponseInterface } from '../components/types/authResponse.interface';
+import { LoginRequestInterface } from '../components/types/loginRequestInterface';
 
 @Injectable()
 export class AuthService {
   constructor(private http: HttpClient) {}
+
   register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -24,5 +26,21 @@ export class AuthService {
         httpOptions
       )
       .pipe(map((response) => response.user));
+  }
+
+  login(data: LoginRequestInterface): Observable<CurrentUserInterface> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+      }),
+    };
+
+    return this.http
+      .post<AuthResponseInterface>(
+        `${environment.apiUrl}/users/login`,
+        data,
+        httpOptions
+      )
+      .pipe(map((responce) => responce.user));
   }
 }
