@@ -12,35 +12,29 @@ import { LoginRequestInterface } from '../components/types/loginRequestInterface
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
 
+  register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
     return this.http
       .post<AuthResponseInterface>(
         `${environment.apiUrl}/users`,
         data,
-        httpOptions
+        this.httpOptions
       )
       .pipe(map((response) => response.user));
   }
 
   login(data: LoginRequestInterface): Observable<CurrentUserInterface> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json',
-      }),
-    };
-
     return this.http
       .post<AuthResponseInterface>(
         `${environment.apiUrl}/users/login`,
         data,
-        httpOptions
+        this.httpOptions
       )
-      .pipe(map((responce) => responce.user));
+      .pipe(map((response) => response.user));
   }
 }
