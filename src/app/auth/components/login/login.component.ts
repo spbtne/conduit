@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
       user: { ...this.form.value },
     };
     this.store.dispatch(loginAction({ request }));
-    console.log(this._isSignInValid);
   }
 
   get _isSignInValid() {

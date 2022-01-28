@@ -9,9 +9,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
+import { TopBarComponent } from './shared/modules/top-bar/top-bar.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TopBarComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
