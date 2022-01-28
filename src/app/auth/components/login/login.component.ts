@@ -5,16 +5,16 @@ import { Store, select } from '@ngrx/store';
 import { AppStateInterface } from 'src/app/shared/types/appState.interface';
 import { BackendErrorsInterface } from 'src/app/shared/types/backendErrors.interface';
 
-import { registerAction } from '../../store/actions/register.action';
+import { loginAction } from '../../store/actions/login.action';
 import { AuthStateInterface } from '../types/authState.interface';
-import { RegisterRequestInterface } from '../types/registerRequest.interface';
+import { LoginRequestInterface } from '../types/loginRequestInterface';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class LoginComponent implements OnInit {
   form!: FormGroup;
   isSubmitting!: boolean;
   backendErrors!: BackendErrorsInterface | null;
@@ -31,9 +31,8 @@ export class RegisterComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required, Validators.minLength(5)],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     });
   }
 
@@ -47,9 +46,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const request: RegisterRequestInterface = {
+    const request: LoginRequestInterface = {
       user: { ...this.form.value },
     };
-    this.store.dispatch(registerAction({ request }));
+    this.store.dispatch(loginAction({ request }));
+    console.log(this._isSignInValid);
+  }
+
+  get _isSignInValid() {
+    return this.form.valid;
   }
 }
