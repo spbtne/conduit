@@ -7,16 +7,22 @@ import { BackendErrorsInterface } from 'src/app/shared/types/backendErrors.inter
   styleUrls: ['./backend-error-messages.component.scss'],
 })
 export class BackendErrorMessagesComponent implements OnInit {
-  @Input('backendErrors') backendErrorsProps!: BackendErrorsInterface;
-  errorMessages!: string[];
+  @Input('backendErrors') backendErrorsProps!: BackendErrorsInterface | null;
+  errorMessages!: (string | null)[];
   constructor() {}
 
   ngOnInit(): void {
-    this.errorMessages = Object.keys(this.backendErrorsProps).map(
-      (errorName: string) => {
-        const messages = this.backendErrorsProps[errorName].join(', ');
-        return `${errorName}: ${messages}`;
-      }
-    );
+    if (this.backendErrorsProps) {
+      this.errorMessages = Object.keys(this.backendErrorsProps).map(
+        (errorName: string) => {
+          if (this.backendErrorsProps) {
+            const messages = this.backendErrorsProps[errorName].join(', ');
+            return `${errorName}: ${messages}`;
+          } else {
+            return null;
+          }
+        }
+      );
+    }
   }
 }

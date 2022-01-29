@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
+import { map, Observable } from 'rxjs';
 
 import { AppStateInterface } from 'src/app/shared/types/appState.interface';
 import { BackendErrorsInterface } from 'src/app/shared/types/backendErrors.interface';
@@ -16,8 +17,8 @@ import { LoginRequestInterface } from '../types/loginRequestInterface';
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
-  isSubmitting!: boolean;
-  backendErrors!: BackendErrorsInterface | null;
+  isSubmitting$!: Observable<boolean>;
+  backendErrors$!: Observable<BackendErrorsInterface | null>;
 
   constructor(
     private fb: FormBuilder,
@@ -37,12 +38,14 @@ export class LoginComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.store
-      .pipe(select('auth'))
-      .subscribe((authState: AuthStateInterface): void => {
-        this.isSubmitting = authState.isSubmitting;
-        this.backendErrors = authState.validationErrors;
-      });
+    this.isSubmitting$ = this.store.pipe(
+      select('auth'),
+      map((authState: AuthStateInterface) => authState.isSubmitting)
+    );
+    this.backendErrors$ = this.store.pipe(
+      select('auth'),
+      map((AuthState: AuthStateInterface) => AuthState.validationErrors)
+    );
   }
 
   onSubmit(): void {
@@ -52,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(loginAction({ request }));
   }
 
-  get _isSignInValid() {
+  get _isFormValid() {
     return this.form.valid;
   }
 }
