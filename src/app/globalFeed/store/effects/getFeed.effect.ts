@@ -18,7 +18,9 @@ export class GetFeedEffect {
       ofType(getFeedAction),
       switchMap(({ url }) => {
         return this.feedService.getFeed(url).pipe(
-          map((feed: FeedResponseInterface) => getFeedSuccessAction({ feed })),
+          map((feed: FeedResponseInterface) => {
+            return getFeedSuccessAction({ feed });
+          }),
           catchError(() => of(getFeedFailureAction()))
         );
       })

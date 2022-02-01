@@ -20,15 +20,14 @@ export const FeedReducer = createReducer(
     (state): FeedStateInterface => ({
       ...state,
       isLoading: true,
-      data: null,
     })
   ),
   on(
     getFeedSuccessAction,
-    (state): FeedStateInterface => ({
+    (state, action): FeedStateInterface => ({
       ...state,
       isLoading: false,
-      data: state.data,
+      data: action.feed,
     })
   ),
   on(
