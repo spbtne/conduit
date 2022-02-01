@@ -9,11 +9,17 @@ export class PersistenceService {
       console.error('Error saving to local storage', error);
     }
   }
-  get(key: string): any {
+  get(key: string): string | null {
     try {
-      return JSON.parse(localStorage.getItem(key) ?? 'Key not found');
+      const storageItem = localStorage.getItem(key);
+      if (storageItem?.length) {
+        return JSON.parse(storageItem);
+      } else {
+        console.info('Key not found');
+        return null;
+      }
     } catch (error) {
-      console.error('Error getting data from local storage', error);
+      console.error('Something get wrong in local storage', error);
       return null;
     }
   }
