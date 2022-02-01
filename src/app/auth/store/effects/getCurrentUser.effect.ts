@@ -13,18 +13,11 @@ import {
 
 @Injectable()
 export class getCurrentUserEffect {
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService,
-    private persistenceService: PersistenceService
-  ) {}
+  constructor(private actions$: Actions, private authService: AuthService) {}
 
   getCurrentUserEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getCurrentUserAction),
-      mergeMap(() => {
-        return this.persistenceService.get('accessToken');
-      }),
       switchMap((accessToken) => {
         if (!accessToken) {
           return of(getCurrentUserFailureAction());
