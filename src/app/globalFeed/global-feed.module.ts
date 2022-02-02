@@ -8,6 +8,7 @@ import { FeedReducer } from './store/reducers/feed.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { GetFeedEffect } from './store/effects/getFeed.effect';
 import { FeedService } from '../shared/services/feed/feed.service';
+import { BannerModule } from '../shared/modules/banner/banner.module';
 
 const routes = [
   {
@@ -24,6 +25,7 @@ const routes = [
     FeedModule,
     StoreModule.forFeature('feed', FeedReducer),
     EffectsModule.forFeature([GetFeedEffect]),
+    BannerModule,
   ],
   providers: [FeedService],
 })
