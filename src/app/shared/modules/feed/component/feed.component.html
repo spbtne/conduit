@@ -1,5 +1,8 @@
-<div *ngIf="isLoading$ | async">Loading...</div>
-<div *ngIf="errors$ | async">Some error happened ...</div>
+<app-spinner *ngIf="isLoading$ | async"></app-spinner>
+<app-error-alert
+  *ngIf="errors$ | async"
+  [errors]="errors$ | async"
+></app-error-alert>
 <ng-container *ngIf="feed$ | async">
   <div
     class="article-preview"
