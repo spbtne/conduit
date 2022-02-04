@@ -10,6 +10,10 @@ import { GetFeedEffect } from './store/effects/getFeed.effect';
 import { FeedService } from '../shared/services/feed/feed.service';
 import { BannerModule } from '../shared/modules/banner/banner.module';
 
+import { TagListModule } from '../shared/modules/tag-list/tag-list.module';
+import { SpinnerModule } from '../shared/modules/spinner/spinner.module';
+import { PopularTagsModule } from '../shared/modules/popular-tags/popularTags.modules';
+
 const routes = [
   {
     path: '',
@@ -26,6 +30,9 @@ const routes = [
     StoreModule.forFeature('feed', FeedReducer),
     EffectsModule.forFeature([GetFeedEffect]),
     BannerModule,
+    TagListModule,
+    SpinnerModule,
+    PopularTagsModule,
   ],
   providers: [FeedService],
 })
