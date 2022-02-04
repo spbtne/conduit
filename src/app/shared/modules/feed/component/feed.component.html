@@ -5,7 +5,7 @@
 ></app-error-alert>
 <ng-container *ngIf="feed$ | async">
   <div
-    class="article-preview"
+    class="article-preview mb-10"
     *ngFor="let article of (feed$ | async)?.articles"
   >
     <div class="article-meta">
@@ -23,8 +23,7 @@
     <a [routerLink]="['/articles', article.slug]" class="preview-link">
       <h3>{{ article.title }}</h3>
       <p>{{ article.description }}</p>
-      Here is list of tags
+      <app-tag-list [tags]="article.tagList"></app-tag-list>
     </a>
   </div>
-  pagination
 </ng-container>
