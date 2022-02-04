@@ -1,0 +1,14 @@
+<div class="sidebar">
+  <p>Popular Tags</p>
+  <app-spinner *ngIf="isLoading$ | async"></app-spinner>
+  <p *ngIf="!(popularTags$ | async) && !(isLoading$ | async)">
+    No tags are here... yet.
+  </p>
+  <ul class="tag-list">
+    <li *ngFor="let tagName of popularTags$ | async">
+      <a [routerLink]="['/tags', tagName]" class="tag-default tag-pill">
+        {{ tagName }}</a
+      >
+    </li>
+  </ul>
+</div>
