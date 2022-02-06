@@ -24,6 +24,7 @@ export class FeedComponent implements OnInit {
     this.store.dispatch(getFeedAction({ url: this.apiUrlProps }));
 
     this.initializeValues();
+    console.log(this);
   }
 
   initializeValues(): void {

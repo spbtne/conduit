@@ -13,6 +13,7 @@ import { BannerModule } from '../shared/modules/banner/banner.module';
 import { TagListModule } from '../shared/modules/tag-list/tag-list.module';
 import { SpinnerModule } from '../shared/modules/spinner/spinner.module';
 import { PopularTagsModule } from '../shared/modules/popular-tags/popularTags.modules';
+import { FeedTogglerModule } from '../shared/modules/feed-toggler/feed-toggler.module';
 
 const routes = [
   {
@@ -33,6 +34,7 @@ const routes = [
     TagListModule,
     SpinnerModule,
     PopularTagsModule,
+    FeedTogglerModule,
   ],
   providers: [FeedService],
 })
