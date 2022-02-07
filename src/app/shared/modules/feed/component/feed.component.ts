@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { getFeedAction } from 'src/app/globalFeed/store/actions/getFeed.action';
@@ -11,7 +17,7 @@ import { FeedResponseInterface } from 'src/app/shared/types/feedResponseInterfac
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnChanges {
   isLoading$!: Observable<boolean>;
   errors$!: Observable<string | null>;
   feed$!: Observable<FeedResponseInterface | null>;
@@ -21,8 +27,6 @@ export class FeedComponent implements OnInit {
   constructor(private store: Store<AppStateInterface>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(getFeedAction({ url: this.apiUrlProps }));
-
     this.initializeValues();
   }
 
@@ -40,6 +44,11 @@ export class FeedComponent implements OnInit {
     this.errors$ = this.store.pipe(
       select('feed'),
       map((feedState: FeedStateInterface) => feedState.error)
+    );
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.store.dispatch(
+      getFeedAction({ url: changes?.['apiUrlProps'].currentValue })
     );
   }
 }

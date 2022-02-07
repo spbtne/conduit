@@ -43,7 +43,7 @@ export class RegisterEffect {
       this.actions$.pipe(
         ofType(registerSuccessAction),
         tap(() => {
-          console.log('success login');
+          console.log('success register');
           this.router.navigateByUrl('/');
         })
       ),
