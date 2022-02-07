@@ -27,3 +27,7 @@
     </a>
   </div>
 </ng-container>
+<ng-container *ngIf="(feed$ | async)?.articlesCount === 0">
+  <p></p>
+  No articles are here... yet.
+</ng-container>
