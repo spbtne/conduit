@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, Observable, tap } from 'rxjs';
 import { AuthStateInterface } from 'src/app/auth/components/types/authState.interface';
@@ -10,9 +10,10 @@ import { AppStateInterface } from 'src/app/shared/types/appState.interface';
   styleUrls: ['./feed-toggler.component.scss'],
 })
 export class FeedTogglerComponent implements OnInit {
-  @Input('selectedTags') selectedTagsProps: string[] | null = null;
+  @Input('selectedTag') selectedTagProps!: string | null;
 
   isLoggedIn$!: Observable<boolean | null>;
+  currentTagUrl!: string;
 
   constructor(private store: Store<AppStateInterface>) {}
 

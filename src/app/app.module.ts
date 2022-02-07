@@ -15,6 +15,7 @@ import { GlobalFeedModule } from './globalFeed/global-feed.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { TopBarModule } from './shared/modules/top-bar/top-bar.module';
 import { YourFeedModule } from './your-feed/your-feed.module';
+import { TagFeedModule } from './tag-feed/tag-feed.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { YourFeedModule } from './your-feed/your-feed.module';
     StoreRouterConnectingModule.forRoot(),
     TopBarModule,
     YourFeedModule,
+    TagFeedModule,
   ],
   providers: [
     PersistenceService,
