@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, from, map, mergeMap, of, switchMap } from 'rxjs';
-import { PersistenceService } from 'src/app/shared/services/persistence/persistence.service';
+import { catchError, map, of, switchMap } from 'rxjs';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUserInterface';
 import { AuthService } from '../../service/auth.service';
 import {
