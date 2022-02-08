@@ -21,9 +21,9 @@ export class getArticleEffect {
       ofType(getArticleAction),
       switchMap(({ slug }) => {
         return this.articleService.getArticle(slug).pipe(
-          map((response: ArticleResponseInterface) =>
-            getArticleSuccessAction({ response })
-          ),
+          map((response: ArticleResponseInterface) => {
+            return getArticleSuccessAction({ response });
+          }),
           catchError(() => of(getArticleFailureAction()))
         );
       })
